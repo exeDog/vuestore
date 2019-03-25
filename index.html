@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="main.css">
+    <title>Vue Store</title>
+</head>
+<body>
+<div class="nav-bar"></div>
+
+<!--the app injection-->
+<div id="app">
+    <div class="product">
+        <div class="product-image">
+            <a :href="link"><img v-bind:src="image"></a>
+        </div>
+        <div class="product-info">
+            <h1>{{product}}</h1>
+            <p v-if="inventory >0">In Stock</p>
+            <p v-else>Out of Stock</p>
+            <button v-on:click="addToCart"
+                    :disabled="!inStock"
+                    :class="{ disabledButton: !inStock }"
+            >
+                Add to cart
+            </button>
+            <div class="sale" v-show='onSale'>On Sale</div>
+            <ul>
+                <li v-for="detail in details">{{detail}}</li>
+            </ul>
+            <div class="color-box"
+                 v-for='variant in variants'
+                 :key="variant.variantId"
+                 :style="{ backgroundColor: variant.variantColor }"
+                 @mouseover="updateProduct(variant.variantImage)">
+            </div>
+        </div>
+    </div>
+    <div class="cart">
+        <p>cart({{cart}})</p>
+    </div>
+        <button @click="clearCart" v-if="cart > 0" class="cart">
+            Clear Cart
+        </button>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
